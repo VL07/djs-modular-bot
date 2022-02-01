@@ -1,0 +1,19 @@
+{
+  "name": "djs-modular-bot",
+  "version": "1.0.0",
+  "description": "A modular Discord bot",
+  "main": "src/bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VL07/djs-modular-bot.git"
+  },
+  "author": "VL07",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VL07/djs-modular-bot/issues"
+  },
+  "homepage": "https://github.com/VL07/djs-modular-bot#readme"
+}
