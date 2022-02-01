@@ -23,4 +23,15 @@ for (const file of eventFiles) {
 	}
 }
 
+const commandFiles = fs
+	.readdirSync("./src/commands")
+	.filter(file => file.endsWith(".js"));
+
+client.commands = {};
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+
+	client.commands[command.command.name] = command;
+}
+
 client.login(process.env.TOKEN);
