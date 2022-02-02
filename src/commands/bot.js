@@ -65,7 +65,6 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor("2F3136")
 				.setTitle("🐛 | Bug")
-				// Temporary link
 				.setDescription("Report a bug by clicking [here](https://github.com/VL07/djs-modular-bot/issues)")
 				.setFooter({ text: "/help" })
 				.setTimestamp();
