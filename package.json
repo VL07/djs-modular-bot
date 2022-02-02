@@ -19,12 +19,12 @@
   },
   "homepage": "https://github.com/VL07/djs-modular-bot#readme",
   "devDependencies": {
-    "eslint": "^8.8.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
     "@discordjs/rest": "^0.3.0",
     "discord.js": "^13.6.0",
-    "dotenv": "^15.0.0"
+    "dotenv": "^15.0.0",
+    "eslint": "^8.8.0"
   }
 }

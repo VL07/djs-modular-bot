@@ -8,7 +8,11 @@ module.exports = {
 
 		console.log(`${interaction.user.tag} ran command /${interaction.commandName}`);
 
-		const command = interaction.client.commands[interaction.commandName];
+		let command = interaction.client.commands[interaction.commandName];
+
+		if (!command.execute) {
+			command = interaction.client.moduleSubcommands[`${interaction.commandName}-${interaction.options.getSubcommand()}`];
+		}
 
 		try {
 			command.execute(interaction);
