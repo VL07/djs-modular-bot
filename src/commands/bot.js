@@ -19,6 +19,11 @@ module.exports = {
 			option
 				.setName("bug")
 				.setDescription("Report a bug"),
+		)
+		.addSubcommand(option =>
+			option
+				.setName("github")
+				.setDescription("Get a link to the bots github"),
 		),
 	async execute(interaction) {
 		if (interaction.options.getSubcommand() === "ping") {
@@ -75,6 +80,27 @@ module.exports = {
 								.setStyle("LINK")
 								.setEmoji("🔗")
 								.setURL("https://github.com/VL07/djs-modular-bot/issues"),
+						),
+				],
+			});
+		} else if (interaction.options.getSubcommand() === "github") {
+			const embed = new MessageEmbed()
+				.setColor("2F3136")
+				.setTitle("🔗 | Github")
+				.setDescription("Go to our Github by clicking [here](https://github.com/VL07/djs-modular-bot/)")
+				.setFooter({ text: "/help" })
+				.setTimestamp();
+
+			await interaction.reply({
+				embeds: [embed],
+				components: [
+					new MessageActionRow()
+						.addComponents(
+							new MessageButton()
+								.setLabel("Github")
+								.setStyle("LINK")
+								.setEmoji("🔗")
+								.setURL("https://github.com/VL07/djs-modular-bot/"),
 						),
 				],
 			});
