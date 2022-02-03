@@ -1,6 +1,7 @@
 const { Client, Intents } = require("discord.js");
 const { SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } = require("@discordjs/builders");
 const fs = require("fs");
+const connectToDb = require("./db/connect");
 
 require("dotenv").config();
 
@@ -98,4 +99,11 @@ for (const file of moduleFiles) {
 	console.log(`Successfully loaded module '${file}'`);
 }
 
-client.login(process.env.TOKEN);
+connectToDb()
+	.then(() => {
+		client.login(process.env.TOKEN);
+	})
+	.catch(err => {
+		console.error(err);
+	});
+
