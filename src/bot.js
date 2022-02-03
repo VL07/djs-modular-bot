@@ -38,6 +38,7 @@ for (const file of commandFiles) {
 
 client.moduleCommands = {};
 client.moduleSubcommands = {};
+client.modules = [];
 
 const moduleFiles = fs
 	.readdirSync("./src/modules", { withFileTypes: true })
@@ -47,6 +48,7 @@ const moduleFiles = fs
 for (const file of moduleFiles) {
 
 	const info = require(`${__dirname}/modules/${file}/info.js`);
+	client.modules.push(info);
 	const moduleCommandFiles = fs
 		.readdirSync(`${__dirname}/modules/${file}/commands`)
 		.filter(commandFile => commandFile.endsWith(".js"));

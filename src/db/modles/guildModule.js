@@ -1,10 +1,9 @@
 const { Schema, model } = require("mongoose");
 
 const GuildPluginSchema = new Schema({
-	guild: {
-		type: Schema.Types.ObjectId,
+	guildId: {
+		type: String,
 		required: true,
-		ref: "Guild",
 	},
 	vars: [{
 		type: Schema.Types.Mixed,
@@ -24,6 +23,6 @@ const GuildPluginSchema = new Schema({
 	},
 }, { minimize: false });
 
-const GuildPlugin = model("GuildPlugins", GuildPluginSchema);
+const GuildModule = model("GuildPlugins", GuildPluginSchema);
 
-module.exports = GuildPlugin;
+module.exports = GuildModule;

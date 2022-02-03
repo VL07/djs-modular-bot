@@ -7,12 +7,13 @@ const guildSchema = new Schema({
 	},
 	plugins: [{
 		type: Schema.Types.ObjectId,
-		ref: "GuildPlugin",
+		ref: "GuildModule",
 		required: true,
 	}],
 	guildId: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 });
 
