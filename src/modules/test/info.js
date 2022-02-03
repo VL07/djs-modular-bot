@@ -4,5 +4,9 @@ module.exports = {
 	global: true,
 	enabledByDefault: true,
 	canBeEnabled: true,
-	vars: {},
+	vars: {
+		"a": 1,
+		"b": true,
+		"c": "foo",
+	},
 };

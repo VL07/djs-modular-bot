@@ -32,6 +32,7 @@ module.exports = {
 							name: guildModule.name,
 							description: guildModule.description,
 							enabled: guildModule.enabledByDefault,
+							vars: guildModule.vars,
 						});
 
 						await moduleDoc.save();

@@ -5,10 +5,10 @@ const GuildPluginSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	vars: [{
+	vars: {
 		type: Schema.Types.Mixed,
 		default: {},
-	}],
+	},
 	name: {
 		type: String,
 		required: true,
