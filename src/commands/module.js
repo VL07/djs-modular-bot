@@ -1,6 +1,6 @@
-const { REST } = require("@discordjs/rest");
 const GuildModule = require("../db/models/guildModule");
-const { Routes } = require("discord-api-types/v9");
+const createWarningEmbed = require("../lib/embedTemplates/warning");
+const createSuccessEmbed = require("../lib/embedTemplates/success");
 
 module.exports = {
 	dontAdd: true,
@@ -11,20 +11,16 @@ module.exports = {
 
 		const moduleDoc = await GuildModule.findOne({ guildId: interaction.guildId, name: moduleName });
 
-		const rest = new REST({
-			"version": "9",
-		}).setToken(process.env.TOKEN);
-
 		if (!moduleDoc) {
 			throw "Doc not found";
 		}
 
 		if (action === "disable") {
 			if (!moduleDoc.canBeDisabled) {
-				interaction.reply("Cannot be disabled");
+				await interaction.reply({ embeds: [createWarningEmbed("Module", "Cannot disable this module")] });
 				return;
 			} else if (!moduleDoc.enabled) {
-				interaction.reply("Already disabled");
+				await interaction.reply({ embeds: [createWarningEmbed("Module", "The module is already disabled")] });
 				return;
 			}
 
@@ -38,21 +34,17 @@ module.exports = {
 
 			await moduleDoc.save();
 
-			interaction.reply("Successfully disabled");
+			await interaction.reply({ embeds: [createSuccessEmbed("Module", "Successfully disabled the module")] });
 		} else if (action === "enable") {
 			if (!moduleDoc.canBeEnabled) {
-				interaction.reply("Cannot be enabled");
+				await interaction.reply({ embeds: [createWarningEmbed("Module", "Cannot enable this module")] });
 				return;
 			} else if (moduleDoc.enabled) {
-				interaction.reply("Already enabled");
+				await interaction.reply({ embeds: [createWarningEmbed("Module", "The module is already enabled")] });
 				return;
 			}
 
 			moduleDoc.enabled = true;
-
-			// await rest.put(Routes.applicationGuildCommand(interaction.client.user.id, interaction.guildId), {
-			// 	body: [interaction.client.moduleCommands[moduleName].command.toJSON()],
-			// });
 
 			await interaction.guild.commands.create(
 				interaction.client.moduleCommands[moduleName].command.toJSON(),
@@ -60,7 +52,7 @@ module.exports = {
 
 			await moduleDoc.save();
 
-			interaction.reply("Successfully enabled");
+			await interaction.reply({ embeds: [createSuccessEmbed("Module", "Successfully enabled the module")] });
 		}
 	},
 };
