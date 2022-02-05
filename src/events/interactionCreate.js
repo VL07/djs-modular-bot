@@ -1,5 +1,6 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const GuildModule = require("../db/models/guildModule");
+const createWarningEmbed = require("../lib/embedTemplates/warning");
 
 module.exports = {
 	name: "interactionCreate",
@@ -15,9 +16,28 @@ module.exports = {
 			command = interaction.client.moduleSubcommands[`${interaction.commandName}-${interaction.options.getSubcommand()}`];
 		}
 
-		console.log(command);
-		console.log(interaction.client.commands);
-		console.log(interaction.commandName);
+		if (command.permissions) {
+			let hasPermission = false;
+			for (const permission of command.permissions) {
+				if (interaction.member.permissions.has(permission)) {
+					hasPermission = true;
+					break;
+				}
+			}
+			if (interaction.member.permissions.has("ADMINISTRATOR")) {
+				hasPermission = true;
+			}
+
+			if (!hasPermission) {
+				let permissionStr = command.permissions[0];
+				if (command.permissions.length > 1) {
+					permissionStr = `${command.permissions.slice(0, -1).join(", ")} or ${command.permissions[command.permissions.length - 1]}`;
+				}
+
+				interaction.reply({ embeds: [createWarningEmbed("Missing permissions", `Required permissions: \`${permissionStr}\``)], ephemeral: true });
+				return;
+			}
+		}
 
 		try {
 			const moduleDoc = await GuildModule.findOne({ name: interaction.commandName, guildId: interaction.guildId });
