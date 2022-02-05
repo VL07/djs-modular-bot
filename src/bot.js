@@ -1,6 +1,7 @@
 const { Client, Intents } = require("discord.js");
 const { SlashCommandBuilder, SlashCommandSubcommandBuilder, SlashCommandSubcommandGroupBuilder } = require("@discordjs/builders");
 const fs = require("fs");
+const connectToDb = require("./db/connect");
 
 require("dotenv").config();
 
@@ -37,6 +38,7 @@ for (const file of commandFiles) {
 
 client.moduleCommands = {};
 client.moduleSubcommands = {};
+client.modules = [];
 
 const moduleFiles = fs
 	.readdirSync("./src/modules", { withFileTypes: true })
@@ -46,6 +48,7 @@ const moduleFiles = fs
 for (const file of moduleFiles) {
 
 	const info = require(`${__dirname}/modules/${file}/info.js`);
+	client.modules.push(info);
 	const moduleCommandFiles = fs
 		.readdirSync(`${__dirname}/modules/${file}/commands`)
 		.filter(commandFile => commandFile.endsWith(".js"));
@@ -98,4 +101,11 @@ for (const file of moduleFiles) {
 	console.log(`Successfully loaded module '${file}'`);
 }
 
-client.login(process.env.TOKEN);
+connectToDb()
+	.then(() => {
+		client.login(process.env.TOKEN);
+	})
+	.catch(err => {
+		console.error(err);
+	});
+
