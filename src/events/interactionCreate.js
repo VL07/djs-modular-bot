@@ -10,7 +10,7 @@ module.exports = {
 
 		let command = interaction.client.commands[interaction.commandName];
 
-		if (!command.execute) {
+		if (!command) {
 			command = interaction.client.moduleSubcommands[`${interaction.commandName}-${interaction.options.getSubcommand()}`];
 		}
 

@@ -5,11 +5,10 @@ const guildSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	plugins: [{
-		type: Schema.Types.ObjectId,
-		ref: "GuildModule",
+	modules: {
+		type: Schema.Types.Mixed,
 		required: true,
-	}],
+	},
 	guildId: {
 		type: String,
 		required: true,
