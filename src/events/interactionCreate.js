@@ -1,4 +1,5 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const GuildModule = require("../db/models/guildModule");
 
 module.exports = {
 	name: "interactionCreate",
@@ -15,7 +16,8 @@ module.exports = {
 		}
 
 		try {
-			command.execute(interaction);
+			const moduleDoc = await GuildModule.findOne({ name: interaction.commandName, guildId: interaction.guildId });
+			await command.execute(interaction, moduleDoc);
 		} catch (err) {
 			if (err) console.error("Error while running command: \n", err);
 

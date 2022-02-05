@@ -1,6 +1,6 @@
 const { REST } = require("@discordjs/rest");
-const Guild = require("../db/modles/guild");
-const GuildModule = require("../db/modles/guildModule");
+const Guild = require("../db/models/guild");
+const GuildModule = require("../db/models/guildModule");
 const { Routes } = require("discord-api-types/v9");
 
 module.exports = {
