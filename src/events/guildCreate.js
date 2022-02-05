@@ -74,7 +74,9 @@ module.exports = {
 									.setDescription("Disable the module"),
 							);
 
-						moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
+						if (guildModule.enabledByDefault) {
+							moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
+						}
 					}
 
 					commandsArr.push(moduleSlashCommand.toJSON());
@@ -126,7 +128,9 @@ module.exports = {
 										.setDescription("Disable the module"),
 								);
 
-							moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
+							if (guildModule.enabledByDefault) {
+								moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
+							}
 						}
 					}
 
