@@ -33,6 +33,13 @@ client.commands = {};
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
+	if (command.name === "module") {
+		client.commands["module"] = command;
+		continue;
+	}
+
+	if (command.dontAdd) { continue; }
+
 	client.commands[command.command.name] = command;
 }
 

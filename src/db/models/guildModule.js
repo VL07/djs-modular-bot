@@ -21,6 +21,14 @@ const GuildPluginSchema = new Schema({
 		type: Boolean,
 		required: true,
 	},
+	canBeDisabled: {
+		type: Boolean,
+		required: true,
+	},
+	canBeEnabled: {
+		type: Boolean,
+		required: true,
+	},
 }, { minimize: false });
 
 const GuildModule = model("GuildPlugins", GuildPluginSchema);

@@ -20,6 +20,7 @@ module.exports = {
 				if (process.env.MODE === "PRODUCTION") {
 					const commandsArr = [];
 					for (const key in commands) {
+						if (commands[key].dontAdd) { continue; }
 						commandsArr.push(commands[key].command.toJSON());
 					}
 					await rest.put(Routes.applicationCommands(clientId), {
@@ -29,6 +30,7 @@ module.exports = {
 				} else {
 					const commandsArr = [];
 					for (const key in commands) {
+						if (commands[key].dontAdd) { continue; }
 						commandsArr.push(commands[key].command.toJSON());
 					}
 					await rest.put(Routes.applicationGuildCommands(clientId, process.env.GUILD_ID), {

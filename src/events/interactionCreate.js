@@ -11,9 +11,13 @@ module.exports = {
 
 		let command = interaction.client.commands[interaction.commandName];
 
-		if (!command) {
+		if (!command || !command.execute) {
 			command = interaction.client.moduleSubcommands[`${interaction.commandName}-${interaction.options.getSubcommand()}`];
 		}
+
+		console.log(command);
+		console.log(interaction.client.commands);
+		console.log(interaction.commandName);
 
 		try {
 			const moduleDoc = await GuildModule.findOne({ name: interaction.commandName, guildId: interaction.guildId });

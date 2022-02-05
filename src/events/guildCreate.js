@@ -2,12 +2,17 @@ const { REST } = require("@discordjs/rest");
 const Guild = require("../db/models/guild");
 const GuildModule = require("../db/models/guildModule");
 const { Routes } = require("discord-api-types/v9");
+const { SlashCommandBuilder, SlashCommandSubcommandGroupBuilder } = require("@discordjs/builders");
 
 module.exports = {
 	name: "guildCreate",
 	once: false,
 	execute(guild) {
 		console.log("Joined a new guild: " + guild.name);
+
+		const moduleSlashCommand = new SlashCommandBuilder()
+			.setName("module")
+			.setDescription("Edit and view modules");
 
 		(async () => {
 			try {
@@ -41,6 +46,8 @@ module.exports = {
 							description: guildModule.description,
 							enabled: guildModule.enabledByDefault,
 							vars: guildModule.vars,
+							canBeDisabled: guildModule.canBeDisabled || true,
+							canBeEnabled: guildModule.canBeEnabled || true,
 						});
 
 						await moduleDoc.save();
@@ -52,7 +59,25 @@ module.exports = {
 						if (!guildModule.global) {
 							commandsArr.push(guild.client.moduleCommands[guildModule.name].command.toJSON());
 						}
+
+						const moduleSubcommandGroup = new SlashCommandSubcommandGroupBuilder()
+							.setName(guildModule.name)
+							.setDescription(guildModule.description)
+							.addSubcommand(option =>
+								option
+									.setName("enable")
+									.setDescription("Enable the module"),
+							)
+							.addSubcommand(option =>
+								option
+									.setName("disable")
+									.setDescription("Disable the module"),
+							);
+
+						moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
 					}
+
+					commandsArr.push(moduleSlashCommand.toJSON());
 
 					console.log(commandsArr);
 
@@ -86,8 +111,26 @@ module.exports = {
 							if (!guildModule.global) {
 								commandsArr.push(guild.client.moduleCommands[guildModule.name].command.toJSON());
 							}
+
+							const moduleSubcommandGroup = new SlashCommandSubcommandGroupBuilder()
+								.setName(guildModule.name)
+								.setDescription(guildModule.description)
+								.addSubcommand(option =>
+									option
+										.setName("enable")
+										.setDescription("Enable the module"),
+								)
+								.addSubcommand(option =>
+									option
+										.setName("disable")
+										.setDescription("Disable the module"),
+								);
+
+							moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);
 						}
 					}
+
+					commandsArr.push(moduleSlashCommand.toJSON());
 
 					console.log(commandsArr);
 
