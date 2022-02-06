@@ -72,6 +72,30 @@ module.exports = {
 								option
 									.setName("disable")
 									.setDescription("Disable the module"),
+							)
+							.addSubcommand(subcmd =>
+								subcmd
+									.setName("var")
+									.setDescription("Get or set the value of a var")
+									.addStringOption(option =>
+										option
+											.setName("operation")
+											.setDescription("What you want to do")
+											.setChoices([["set", "set"], ["get", "get"]])
+											.setRequired(true),
+									)
+									.addStringOption(option =>
+										option
+											.setName("var")
+											.setDescription("The name of the variable you want to view or change")
+											.setRequired(false),
+									)
+									.addStringOption(option =>
+										option
+											.setName("value")
+											.setDescription("(Only set) The value you want to give the variable")
+											.setRequired(false),
+									),
 							);
 
 						if (guildModule.enabledByDefault) {
@@ -126,7 +150,32 @@ module.exports = {
 									option
 										.setName("disable")
 										.setDescription("Disable the module"),
+								)
+								.addSubcommand(subcmd =>
+									subcmd
+										.setName("var")
+										.setDescription("Get or set the value of a var")
+										.addStringOption(option =>
+											option
+												.setName("operation")
+												.setDescription("What you want to do")
+												.setChoices(["set", "get"])
+												.setRequired(true),
+										)
+										.addStringOption(option =>
+											option
+												.setName("var")
+												.setDescription("The name of the variable you want to view or change")
+												.setRequired(true),
+										)
+										.addStringOption(option =>
+											option
+												.setName("value")
+												.setDescription("(Only set) The value you want to give the variable")
+												.setRequired(false),
+										),
 								);
+
 
 							if (guildModule.enabledByDefault) {
 								moduleSlashCommand.addSubcommandGroup(moduleSubcommandGroup);

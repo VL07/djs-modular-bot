@@ -53,6 +53,50 @@ module.exports = {
 			await moduleDoc.save();
 
 			await interaction.reply({ embeds: [createSuccessEmbed("Module", "Successfully enabled the module")] });
+		} else if (action === "var") {
+			const operation = interaction.options.getString("operation");
+			const varName = interaction.options.getString("var");
+			const value = interaction.options.getString("value");
+
+			if (operation === "set") {
+				if (!value) {
+					await interaction.reply({ embeds: [createWarningEmbed("Module", "`value` is required for the set operation")] });
+					return;
+				} else if (!varName) {
+					await interaction.reply({ embeds: [createWarningEmbed("Module", "`var` is required for the set operation")] });
+					return;
+				} else if (!(varName in moduleDoc.vars)) {
+					await interaction.reply({ embeds: [createWarningEmbed("Module", `\`${varName}\` is not a valid variable, use the \`get\` operation to view all variables`)] });
+					return;
+				}
+
+				moduleDoc.vars[varName] = value;
+				moduleDoc.markModified("vars");
+
+				await moduleDoc.save();
+
+				await interaction.reply({ embeds: [createSuccessEmbed("Module", `Successfully updated \`${varName}\` value to \`${value}\``)] });
+			} else if (operation === "get") {
+				if (!varName) {
+					let varsAsStr = "";
+
+					for (const key in moduleDoc.vars) {
+						const varValue = moduleDoc.vars[key];
+
+						varsAsStr += `\n${key}: \`${varValue}\``;
+					}
+
+					await interaction.reply({ embeds: [createSuccessEmbed("Module", `**Vars**: ${varsAsStr}`)] });
+					return;
+				}
+
+				if (!(varName in moduleDoc.vars)) {
+					await interaction.reply({ embeds: [createWarningEmbed("Module", `\`${varName}\` is not a valid variable, use the \`get\` operation to view all variables`)] });
+					return;
+				}
+
+				await interaction.reply({ embeds: [createSuccessEmbed("Module", `${varName}: ${moduleDoc.vars[varName]}`)] });
+			}
 		}
 	},
 };
