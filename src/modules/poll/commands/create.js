@@ -121,15 +121,20 @@ module.exports = {
 			message = await interaction.channel.send({ embeds: [embed], components: [row], fetchReply: true });
 		}
 
-		const votes = {};
+		const votes = [];
 
 		for (const i in answers) {
-			votes[i] = {};
+			votes.splice(i, 0, []);
 		}
 
-		doc.hiddenVars[message.id] = {
+		if (!doc.hiddenVars.polls) {
+			doc.hiddenVars.polls = {};
+		}
+
+		doc.hiddenVars.polls[message.id] = {
 			creator: message.author.id,
 			votes: votes,
+			titles: answers,
 		};
 
 		doc.markModified("hiddenVars");
