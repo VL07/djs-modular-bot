@@ -48,6 +48,7 @@ module.exports = {
 							vars: guildModule.vars,
 							canBeDisabled: guildModule.canBeDisabled || true,
 							canBeEnabled: guildModule.canBeEnabled || true,
+							hiddenVars: guildModule.hiddenVars || {},
 						});
 
 						await moduleDoc.save();

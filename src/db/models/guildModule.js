@@ -9,6 +9,10 @@ const GuildPluginSchema = new Schema({
 		type: Schema.Types.Mixed,
 		default: {},
 	},
+	hiddenVars: {
+		type: Schema.Types.Mixed,
+		default: {},
+	},
 	name: {
 		type: String,
 		required: true,
