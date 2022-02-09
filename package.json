@@ -5,8 +5,8 @@
   "main": "src/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "echo \"Running bot in DEV mode\" && nodemon ./src/bot.js",
-    "start": "echo \"Running bot in PRODUCTION mode\" && node ./src/bot.js"
+    "dev": "echo \"Running bot in DEV mode\" && nodemon .",
+    "start": "echo \"Running bot in PRODUCTION mode\" && ts-node src/Bot.ts"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/VL07/djs-modular-bot#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@types/node": "^17.0.16",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@discordjs/rest": "^0.3.0",
