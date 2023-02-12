@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/VL07/djs-modular-bot#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "@discordjs/rest": "^0.3.0",
